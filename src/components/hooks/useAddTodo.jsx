@@ -1,41 +1,21 @@
 import { useState } from "react";
 import { v4 as uuidv4} from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodo } from "../../actions";
-// export const useAddTodo = () => {
-//     const [todos, setTodos] = useState([])
+import { addTodoAction, deleteTodoAction } from "../../actions";
 
-//     const addTodo = (todo) => {
-//     setTodos([
-//         ...todos,
-//         { id: uuidv4(), title: todo, completed: false, isEditing: false },
-//     ]);
-// }
-
-// const deleteTodo = (id) => setTodos(todos.filter((todo) => todo.id !== id));
-
-//     return { todos, setTodos, addTodo, deleteTodo }
-// };
-
-export const useAddTodo = () => {
-    const [title, setTitle] = useState ('')
+export const useAddTodo = (value, setValue) => {
     const dispatch = useDispatch()
     const todos = useSelector(state => state.todos)
 
-    const addTodo = () => {
+    const addTodo = (title) => {
+        console.log(title)
         if (title) {
-            const newTodo = {
-                id: uuidv4(),
-                title: title,
-                completed: false,
-                isEditing: false,
-            }
-            dispatch(addTodo(newTodo))
-            setTitle('')
+            dispatch(addTodoAction(title))
+            setValue('')
         }
     }
     const deleteTodo = (id) => {
-        dispatch(deleteTodo(id))
+        dispatch(deleteTodoAction(id))
     }
 
     return { addTodo, deleteTodo }
